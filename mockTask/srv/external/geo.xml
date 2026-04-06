@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="GeocodeService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <Annotation Term="Core.Links">
+        <Collection>
+          <Record>
+            <PropertyValue Property="rel" String="author"/>
+            <PropertyValue Property="href" String="https://cap.cloud.sap"/>
+          </Record>
+        </Collection>
+      </Annotation>
+      <EntityContainer Name="EntityContainer">
+        <ActionImport Name="getLocation" Action="GeocodeService.getLocation"/>
+        <ActionImport Name="getStructuredLocation" Action="GeocodeService.getStructuredLocation"/>
+      </EntityContainer>
+      <ComplexType Name="return_GeocodeService_getLocation">
+        <Property Name="latitude" Type="Edm.Double"/>
+        <Property Name="longitude" Type="Edm.Double"/>
+        <Property Name="display_name" Type="Edm.String"/>
+        <Property Name="boundingbox" Type="Collection(Edm.String)" Nullable="true"/>
+        <Property Name="sub_division" Type="Collection(Edm.String)" Nullable="true"/>
+      </ComplexType>
+      <ComplexType Name="return_GeocodeService_getStructuredLocation">
+        <Property Name="latitude" Type="Edm.Double"/>
+        <Property Name="longitude" Type="Edm.Double"/>
+        <Property Name="display_name" Type="Edm.String"/>
+        <Property Name="boundingbox" Type="Collection(Edm.String)" Nullable="true"/>
+      </ComplexType>
+      <Action Name="getLocation" IsBound="false">
+        <Parameter Name="location" Type="Edm.String"/>
+        <ReturnType Type="GeocodeService.return_GeocodeService_getLocation"/>
+      </Action>
+      <Action Name="getStructuredLocation" IsBound="false">
+        <Parameter Name="amenity" Type="Edm.String"/>
+        <Parameter Name="street" Type="Edm.String"/>
+        <Parameter Name="city" Type="Edm.String"/>
+        <Parameter Name="county" Type="Edm.String"/>
+        <Parameter Name="state" Type="Edm.String"/>
+        <Parameter Name="country" Type="Edm.String"/>
+        <Parameter Name="postalcode" Type="Edm.String"/>
+        <ReturnType Type="GeocodeService.return_GeocodeService_getStructuredLocation"/>
+      </Action>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

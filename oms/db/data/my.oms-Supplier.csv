@@ -1,0 +1,6 @@
+ID,supplierName,contactNumber,address_street,address_city,address_pincode,status,userEmail,password,createdAt,createdBy,modifiedAt,modifiedBy
+550e8400-e29b-41d4-a716-446655440201,Global Supplies,9876543210,12 Industrial Rd,New York,10005,Active,global.supplies@example.com,Sup@123,2025-01-11T09:00:00Z,system,2025-01-11T09:00:00Z,system
+550e8400-e29b-41d4-a716-446655440202,Tech Parts Co,9123456780,34 Tech Park,San Francisco,94107,Active,tech.parts@example.com,Tech@456,2025-01-12T10:15:00Z,system,2025-01-12T10:15:00Z,system
+550e8400-e29b-41d4-a716-446655440203,Office Supplies Inc,9988776655,56 Commerce St,Chicago,60602,Inactive,office.supplies@example.com,Office@789,2025-01-15T14:45:00Z,admin,2025-01-18T16:50:00Z,admin
+550e8400-e29b-41d4-a716-446655440204,Quick Logistics,9090909090,78 Distribution Blvd,Boston,02110,Active,quick.logistics@example.com,Quick@321,2025-02-01T11:10:00Z,system,2025-02-01T11:10:00Z,system
+550e8400-e29b-41d4-a716-446655440205,Smart Solutions,9345678901,90 Enterprise Ave,Los Angeles,90012,Active,smart.solutions@example.com,Smart@654,2025-02-05T08:20:00Z,admin,2025-02-07T12:30:00Z,admin

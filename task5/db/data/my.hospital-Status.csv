@@ -1,0 +1,4 @@
+code,criticality,name,descr
+S,0,Scheduled,Appointment is scheduled
+C,3,Completed,Appointment completed successfully
+X,1,Cancelled,Appointment was cancelled

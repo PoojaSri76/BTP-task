@@ -1,0 +1,99 @@
+{
+ "meta": {
+  "creator": "cds-dk 9.6.1"
+ },
+ "$version": "2.0",
+ "definitions": {
+  "geo.getLocation": {
+   "kind": "action",
+   "@cds.external": true,
+   "params": {
+    "location": {
+     "type": "cds.String"
+    }
+   },
+   "returns": {
+    "type": "geo.return_GeocodeService_getLocation"
+   }
+  },
+  "geo.getStructuredLocation": {
+   "kind": "action",
+   "@cds.external": true,
+   "params": {
+    "amenity": {
+     "type": "cds.String"
+    },
+    "street": {
+     "type": "cds.String"
+    },
+    "city": {
+     "type": "cds.String"
+    },
+    "county": {
+     "type": "cds.String"
+    },
+    "state": {
+     "type": "cds.String"
+    },
+    "country": {
+     "type": "cds.String"
+    },
+    "postalcode": {
+     "type": "cds.String"
+    }
+   },
+   "returns": {
+    "type": "geo.return_GeocodeService_getStructuredLocation"
+   }
+  },
+  "geo.return_GeocodeService_getLocation": {
+   "kind": "type",
+   "@cds.external": true,
+   "elements": {
+    "latitude": {
+     "type": "cds.Double"
+    },
+    "longitude": {
+     "type": "cds.Double"
+    },
+    "display_name": {
+     "type": "cds.String"
+    },
+    "boundingbox": {
+     "items": {
+      "type": "cds.String"
+     }
+    },
+    "sub_division": {
+     "items": {
+      "type": "cds.String"
+     }
+    }
+   }
+  },
+  "geo.return_GeocodeService_getStructuredLocation": {
+   "kind": "type",
+   "@cds.external": true,
+   "elements": {
+    "latitude": {
+     "type": "cds.Double"
+    },
+    "longitude": {
+     "type": "cds.Double"
+    },
+    "display_name": {
+     "type": "cds.String"
+    },
+    "boundingbox": {
+     "items": {
+      "type": "cds.String"
+     }
+    }
+   }
+  },
+  "geo": {
+   "kind": "service",
+   "@cds.external": true
+  }
+ }
+}

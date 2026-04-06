@@ -1,0 +1,97 @@
+_schema-version: 3.3.0
+ID: mockTask
+description: A simple CAP project.
+version: 1.0.0
+modules:
+  - name: mockTask-srv
+    type: nodejs
+    path: gen/srv
+    requires:
+      - name: mockTask-db
+      - name: my-destination
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    parameters:
+      buildpack: nodejs_buildpack
+      instances: 1
+    build-parameters:
+      builder: npm-ci
+  - name: mockTask-db-deployer
+    type: hdb
+    path: gen/db
+    requires:
+      - name: mockTask-db
+    parameters:
+      buildpack: nodejs_buildpack
+  - name: mockTask-app-content
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: mockTask-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - mocktask.zip
+          name: mocktask
+          target-path: resources/
+  - name: mocktask
+    type: html5
+    path: app/mocktask
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
+resources:
+  - name: mockTask-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: mockTask-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: mockTask-html5-service
+      service-plan: app-host
+  - name: mockTask-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: false
+        init_data:
+          instance:
+            destinations:
+              - Authentication: NoAuthentication
+                Name: ui5
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://ui5.sap.com
+            existing_destinations_policy: update
+        version: 1.0.0
+      service: destination
+      service-name: mockTask-destination-service
+      service-plan: lite
+  - name: my-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production

@@ -1,0 +1,6 @@
+ID,categoryName,description,parentCategory_ID,status,createdAt,createdBy,modifiedAt,modifiedBy
+550e8400-e29b-41d4-a716-446655441001,Electronics,Devices and gadgets,,Active,2025-01-10T09:00:00Z,system,2025-01-10T09:00:00Z,system
+550e8400-e29b-41d4-a716-446655441002,Computers,Laptops and desktops,550e8400-e29b-41d4-a716-446655441001,Active,2025-01-10T09:15:00Z,system,2025-01-10T09:15:00Z,system
+550e8400-e29b-41d4-a716-446655441003,Smartphones,All mobile phones,550e8400-e29b-41d4-a716-446655441001,Active,2025-01-10T09:30:00Z,system,2025-01-10T09:30:00Z,system
+550e8400-e29b-41d4-a716-446655441004,Home Appliances,Kitchen and home devices,,Active,2025-01-11T10:00:00Z,system,2025-01-11T10:00:00Z,system
+550e8400-e29b-41d4-a716-446655441005,Refrigerators,Fridges and freezers,550e8400-e29b-41d4-a716-446655441004,Active,2025-01-11T10:15:00Z,system,2025-01-11T10:15:00Z,system

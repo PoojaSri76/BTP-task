@@ -1,0 +1,6 @@
+ID,warehouseName,address_street,address_city,address_pincode,createdAt,createdBy,modifiedAt,modifiedBy
+550e8400-e29b-41d4-a716-446655444001,New York Central,100 Warehouse Rd,New York,10005,2025-01-14T09:00:00Z,system,2025-01-14T09:00:00Z,system
+550e8400-e29b-41d4-a716-446655444002,San Francisco Depot,200 Distribution Ave,San Francisco,94107,2025-01-14T09:15:00Z,system,2025-01-14T09:15:00Z,system
+550e8400-e29b-41d4-a716-446655444003,Chicago Hub,300 Logistics Blvd,Chicago,60602,2025-01-14T09:30:00Z,system,2025-01-14T09:30:00Z,system
+550e8400-e29b-41d4-a716-446655444004,Boston Storage,400 Supply St,Boston,02110,2025-01-14T09:45:00Z,system,2025-01-14T09:45:00Z,system
+550e8400-e29b-41d4-a716-446655444005,Los Angeles Depot,500 Commerce Rd,Los Angeles,90012,2025-01-14T10:00:00Z,system,2025-01-14T10:00:00Z,system

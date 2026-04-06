@@ -1,0 +1,51 @@
+###
+GET http://localhost:4004/odata/v4/bookshop/Books 
+
+###
+POST http://localhost:4004/odata/v4/bookshop/Books
+Content-Type: application/json
+
+{
+    "title": "Stars Over the Andes",
+    "description": "A mountaineer embarks on a dangerous rescue mission across the Andes, battling harsh terrain, rival explorers, and his own past.",
+    "author": "Diego Flores",
+    "genre": "Adventure",
+    "price": 363.696,
+    "stock": 8030
+}
+
+###
+GET http://localhost:4004/odata/v4/bookshop/Books(5bc2b8e6-419e-4978-83bc-0f4d78116d66) 
+
+###
+GET http://localhost:4004/odata/v4/bookshop/Books/$count
+
+###
+GET http://localhost:4004/odata/v4/bookshop/Books(5bc2b8e6-419e-4978-83bc-0f4d78116d66)/author 
+
+
+
+###
+PATCH  http://localhost:4004/odata/v4/bookshop/Books(5bc2b8e6-419e-4978-83bc-0f4d78116d66)
+Content-Type: application/json
+
+{
+    "genre": "Science Fiction"
+}
+
+###
+PUT http://localhost:4004/odata/v4/bookshop/Books(54e43964-fda2-4aab-9658-6d66e55aa528) 
+Content-Type: application/json
+
+{
+    "title": "Midnight Algorithms",
+    "description": "An AI researcher discovers her system predicting crimes before they occur.",
+    "author": "Noah Callister",
+    "genre": "Science Fiction",
+    "price": 203.19,
+    "stock": 952
+}
+
+###
+DELETE http://localhost:4004/odata/v4/bookshop/Books(54e43964-fda2-4aab-9658-6d66e55aa528) 
+ 
