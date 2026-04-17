@@ -47,7 +47,7 @@ modules:
       builder: custom
       commands:
         - npm install
-        - npm run build:cf
+        - npm run build:cfmockTask-db
       supported-platforms:
         []
 resources:

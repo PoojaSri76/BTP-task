@@ -1,0 +1,20 @@
+ID,locale,name,description
+1,ta,நாற்காலி,வசதியான அமர்வு மரச்சாமான்கள்
+1,hi,कुर्सी,आरामदायक बैठने का फर्नीचर
+1,de,Stuhl,Bequemes Sitzmöbel
+
+2,ta,குளிர்சாதன பெட்டி,உணவை குளிர்விக்க பயன்படும் சாதனம்
+2,hi,फ्रिज,खाद्य पदार्थों को ठंडा रखने का उपकरण
+2,de,Kühlschrank,Gerät zum Kühlen von Lebensmitteln
+
+3,ta,தொலைக்காட்சி,மின்னணு காட்சி சாதனம்
+3,hi,टेलीविजन,इलेक्ट्रॉनिक डिस्प्ले डिवाइस
+3,de,Fernseher,Elektronisches Anzeigegerät
+
+4,ta,துவைக்கும் இயந்திரம்,உடைகளை சுத்தம் செய்யும் சாதனம்
+4,hi,वॉशिंग मशीन,कपड़े साफ करने का उपकरण
+4,de,Waschmaschine,Gerät zum Reinigen von Kleidung
+
+5,ta,ஏர் கண்டிஷனர்,அறைகளை குளிர்விக்கும் அமைப்பு
+5,hi,एयर कंडीशनर,कमरों को ठंडा करने की प्रणाली
+5,de,Klimaanlage,Kühlsystem für Räume
