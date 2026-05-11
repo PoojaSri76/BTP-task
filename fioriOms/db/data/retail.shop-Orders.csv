@@ -1,0 +1,8 @@
+ID,quantity,pricePerUnit,subTotal,shippingCharge,totalAmount,status,trackingID,TrackingURL,orderDate,amountPaid,customer_ID,product_ID,imageUrl
+ORD1,2,55000.00,110000.00,200.00,110200.00,Ordered,TR001,https://v3.delhivery.com/tracking,2026-05-01T10:30:00,50000.00,C1,P1,https://tse4.mm.bing.net/th/id/OIP.KYNfe24B40IcLuUX_xQJgAHaE8?rs=1&pid=ImgDetMain&o=7&rm=3
+ORD2,1,25000.00,25000.00,150.00,25150.00,Delivered,TR002,https://v3.delhivery.com/tracking,2026-05-02T11:15:00,25150.00,C2,P2,https://tse4.mm.bing.net/th/id/OIP.KYNfe24B40IcLuUX_xQJgAHaE8?rs=1&pid=ImgDetMain&o=7&rm=3
+ORD3,3,1500.00,4500.00,100.00,4600.00,Ordered,TR003,https://v3.delhivery.com/tracking,2026-05-03T09:45:00,2000.00,C3,P3,https://tse4.mm.bing.net/th/id/OIP.KYNfe24B40IcLuUX_xQJgAHaE8?rs=1&pid=ImgDetMain&o=7&rm=3
+ORD4,2,799.00,1598.00,80.00,1678.00,Cancelled,TR004,https://v3.delhivery.com/tracking,2026-05-04T14:20:00,0.00,C4,P4,https://img.freepik.com/premium-photo/3d-rendered-photo-clothing-product-ad-that-are-there-product-is-unique-relaible_1198274-46268.jpg
+ORD5,1,2499.00,2499.00,120.00,2619.00,Delivered,TR005,https://v3.delhivery.com/tracking,2026-05-05T16:00:00,2619.00,C5,P5,https://static.vecteezy.com/system/resources/thumbnails/039/409/223/small_2x/ai-generated-a-display-of-stylish-shoes-in-a-mall-footwear-store-photo.jpeg
+ORD6,1,6500.00,6500.00,180.00,6680.00,Ordered,TR006,https://v3.delhivery.com/tracking,2026-05-06T12:10:00,3000.00,C6,P6,https://tse1.mm.bing.net/th/id/OIP.5z1BGv2R9qcHY3Z7uvekbAHaDj?rs=1&pid=ImgDetMain&o=7&rm=3
+ORD7,2,1299.00,2598.00,90.00,2688.00,Delivered,TR007,https://v3.delhivery.com/tracking,2026-05-07T18:25:00,2688.00,C7,P7,https://tse4.mm.bing.net/th/id/OIP.KYNfe24B40IcLuUX_xQJgAHaE8?rs=1&pid=ImgDetMain&o=7&rm=3

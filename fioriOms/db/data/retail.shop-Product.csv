@@ -1,0 +1,8 @@
+ID,name,category,price,stock
+P1,Laptop,Electronics,55000.00,25
+P2,Smartphone,Electronics,25000.00,40
+P3,Headphones,Electronics,1500.00,75
+P4,T-Shirt,Clothing,799.00,120
+P5,Shoes,Footwear,2499.00,45
+P6,Office Chair,Furniture,6500.00,15
+P7,Keyboard,Electronics,1299.00,55

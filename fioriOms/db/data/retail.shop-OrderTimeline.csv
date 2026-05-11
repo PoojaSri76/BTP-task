@@ -1,0 +1,24 @@
+ID,status,date,note,order_ID
+T1,Ordered,2026-05-01T10:30:00,Order placed,ORD1
+T2,Processing,2026-05-01T12:00:00,Order is being prepared,ORD1
+
+T3,Ordered,2026-05-02T11:15:00,Order placed,ORD2
+T4,Shipped,2026-05-02T15:00:00,Order shipped via courier,ORD2
+T5,Delivered,2026-05-03T18:00:00,Order delivered successfully,ORD2
+
+T6,Ordered,2026-05-03T09:45:00,Order placed,ORD3
+T7,Processing,2026-05-03T11:00:00,Preparing items,ORD3
+
+T8,Ordered,2026-05-04T14:20:00,Order placed,ORD4
+T9,Cancelled,2026-05-04T16:00:00,Order cancelled by user,ORD4
+
+T10,Ordered,2026-05-05T16:00:00,Order placed,ORD5
+T11,Shipped,2026-05-05T18:00:00,Dispatched from warehouse,ORD5
+T12,Delivered,2026-05-06T12:00:00,Delivered to customer,ORD5
+
+T13,Ordered,2026-05-06T12:10:00,Order placed,ORD6
+T14,Processing,2026-05-06T14:00:00,Preparing shipment,ORD6
+
+T15,Ordered,2026-05-07T18:25:00,Order placed,ORD7
+T16,Shipped,2026-05-07T20:00:00,Out for delivery,ORD7
+T17,Delivered,2026-05-08T10:00:00,Delivered successfully,ORD7
