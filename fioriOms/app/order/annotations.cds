@@ -31,11 +31,6 @@ annotate service.Order with @(
                 Value      : status,
                 Criticality: criticality
             },
-        // {
-        //     $Type: 'UI.DataField',
-        //     Label: 'Product Image',
-        //     Value: imageUrl
-        // },
         ],
     },
     UI.FieldGroup #Invoice     : {
@@ -179,12 +174,17 @@ annotate service.Order with @(
                 }
             ],
             ![@UI.Hidden]: {$edmJson: {$Not: {$Path: 'IsActiveEntity'}}}
+        },{
+            $Type: 'UI.ReferenceFacet',
+            Label: 'Shipping details',
+            Target: 'shipping/@UI.FieldGroup#Shipping'
         },
         {
             $Type : 'UI.ReferenceFacet',
             Label : 'Order Timeline',
             Target: 'timeline/@UI.LineItem'
-        }
+        },
+        
     ],
     UI.HeaderFacets            : [{
         $Type : 'UI.ReferenceFacet',
@@ -259,13 +259,13 @@ annotate service.Order with @(
             @HTML5.CssDefaults: {width: '100px'}
         },
         {
-            $Type: 'UI.DataFieldForAction',
-            Label: 'Cancel Order',
+            $Type : 'UI.DataFieldForAction',
+            Label : 'Cancel Order',
             Action: 'retailService.EntityContainer/cancelOrder'
         },
         {
-            $Type: 'UI.DataFieldForAction',
-            Label: 'Get Count',
+            $Type : 'UI.DataFieldForAction',
+            Label : 'Get Count',
             Action: 'retailService.EntityContainer/getOrdersCount'
         }
     ],
@@ -310,18 +310,23 @@ annotate service.Order with actions {
     ]}
 };
 
+// fields
 annotate service.Order with {
-    totalAmount @Common.Label: 'Total Amount';
-    customer    @Common.Label: 'Customer';
-    product     @Common.Label: 'Product';
+    totalAmount  @Common.Label: 'Total Amount';
+    customer     @Common.Label: 'Customer';
+    product      @Common.Label: 'Product';
     pricePerUnit @Core.Computed;
-    subTotal @Core.Computed;
-    totalAmount @Core.Computed;
-    status @Core.Computed;
+    subTotal     @Core.Computed;
+    totalAmount  @Core.Computed;
+    status       @Core.Computed;
+    quantity @Common.IsDigitSequence;
+    shippingCharge @Common.IsDigitSequence;
 };
 
+// customer value list
 annotate service.Order with {
-    customer @Common.ValueList: {
+    customer @Common.ValueListWithFixedValues: true
+      @Common.ValueList: {
         $Type         : 'Common.ValueListType',
         CollectionPath: 'Customer',
         Parameters    : [
@@ -334,22 +339,23 @@ annotate service.Order with {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'name',
             },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'email',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'phone',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'city',
-            },
+            // {
+            //     $Type            : 'Common.ValueListParameterDisplayOnly',
+            //     ValueListProperty: 'email',
+            // },
+            // {
+            //     $Type            : 'Common.ValueListParameterDisplayOnly',
+            //     ValueListProperty: 'phone',
+            // },
+            // {
+            //     $Type            : 'Common.ValueListParameterDisplayOnly',
+            //     ValueListProperty: 'city',
+            // },
         ],
     }
 };
 
+// product value list
 annotate service.Order with {
     product @Common.ValueList: {
         $Type         : 'Common.ValueListType',
@@ -444,22 +450,36 @@ annotate service.OrderTimeline with @(
     }
 );
 
-annotate service.cancelOrder with @(
-    Common.SideEffects : {
-        TargetEntities : [
-            '/retailService.EntityContainer/Order'
-        ]
-    }
-);
+// annotate service.Customer with {
 
-annotate service.getOrdersCount with (
-    status @Common.ValueList: {
-        CollectionPath : 'Order',
-        Parameters : [
+// }
+    
+
+annotate service.Shipping with @(
+    UI.FieldGroup #Shipping : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
             {
-                $Type : 'Common.ValueListParameterInOut',
-                ValueListProperty : 'status'
+                $Type: 'UI.DataField',
+                Label: 'ID',
+                Value: ID
+            },
+            {
+                $Type: 'UI.DataField',
+                Label : 'Address',
+                Value: address
             }
         ]
     }
+) ;
+
+annotate service.cancelOrder with @(Common.SideEffects: {TargetEntities: ['/retailService.EntityContainer/Order']});
+
+annotate service.getOrdersCount with(status @Common.ValueList: {
+    CollectionPath: 'Order',
+    Parameters    : [{
+        $Type            : 'Common.ValueListParameterInOut',
+        ValueListProperty: 'status'
+    }]
+}
 );

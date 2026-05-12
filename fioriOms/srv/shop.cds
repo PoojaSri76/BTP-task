@@ -13,6 +13,8 @@ service retailService {
     // @odata.draft.enabled
     entity OrderTimeline as projection on db.OrderTimeline;
 
+    entity Shipping as projection on db.Shipping;
+
     // action insertOrderTimeline(order_ID: String, status:String, note:String);
 
     action cancelOrder(orderID : String, reason: String);

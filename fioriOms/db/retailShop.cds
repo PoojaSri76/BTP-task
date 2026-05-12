@@ -49,6 +49,7 @@ entity Orders {
         imageUrl              : String                              @UI.IsImageURL   : true;
         timeline              : Composition of many OrderTimeline
                                     on timeline.order = $self;
+        shipping : Composition of one Shipping on shipping.order = $self;
 }
 
 entity OrderTimeline {
@@ -61,4 +62,10 @@ entity OrderTimeline {
         date   : Timestamp default CURRENT_TIMESTAMP @UI.DateTimeStyle: 'short';
         note   : String(255);
         order  : Association to Orders;
+}
+
+entity Shipping {
+    key ID : String;
+    order : Association to one Orders;
+    address : String;
 }
