@@ -2,10 +2,12 @@
   "name": "fioriOms",
   "version": "1.0.0",
   "dependencies": {
+    "@cap-js/hana": "^2",
     "@sap/cds": "^9"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2",
+    "@sap/cds-dk": "^9",
     "cds-plugin-ui5": "^0.13.0"
   },
   "scripts": {
@@ -18,5 +20,13 @@
   ],
   "sapux": [
     "app/order"
-  ]
+  ],
+  "cds": {
+    "requires": {
+      "destinations": true,
+      "html5-repo": true,
+      "workzone": true,
+      "auth": "mocked"
+    }
+  }
 }

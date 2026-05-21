@@ -49,7 +49,11 @@ entity Orders {
         imageUrl              : String                              @UI.IsImageURL   : true;
         timeline              : Composition of many OrderTimeline
                                     on timeline.order = $self;
-        shipping : Composition of one Shipping on shipping.order = $self;
+        shipping              : Composition of one Shipping
+                                    on shipping.order = $self;
+        deliveryProofName     : String;
+        deliveryProofType     : String   @Core.IsMediaType;
+        deliveryProof         : LargeBinary   @Core.MediaType  : deliveryProofType
 }
 
 entity OrderTimeline {
@@ -65,7 +69,7 @@ entity OrderTimeline {
 }
 
 entity Shipping {
-    key ID : String;
-    order : Association to one Orders;
-    address : String;
+    key ID      : String;
+        order   : Association to one Orders;
+        address : String;
 }

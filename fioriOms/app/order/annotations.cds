@@ -75,6 +75,11 @@ annotate service.Order with @(
                 $Type : 'UI.DataFieldForAnnotation',
                 Target: '@UI.DataPoint#payment',
                 Label : 'Amount Paid'
+            },
+            {
+                $Type : 'UI.DataField',
+                Label : 'Delivery Proof',
+                Value: deliveryProof
             }
         ]
     },
@@ -321,6 +326,8 @@ annotate service.Order with {
     status       @Core.Computed;
     quantity @Common.IsDigitSequence;
     shippingCharge @Common.IsDigitSequence;
+    deliveryProof @Core.ContentDisposition.Type : 'inline'
+    @Core.ContentDisposition.Filename: deliveryProofName;
 };
 
 // customer value list
@@ -449,12 +456,7 @@ annotate service.OrderTimeline with @(
         }
     }
 );
-
-// annotate service.Customer with {
-
-// }
     
-
 annotate service.Shipping with @(
     UI.FieldGroup #Shipping : {
         $Type : 'UI.FieldGroupType',
@@ -473,6 +475,7 @@ annotate service.Shipping with @(
     }
 ) ;
 
+// side effects for unbound action
 annotate service.cancelOrder with @(Common.SideEffects: {TargetEntities: ['/retailService.EntityContainer/Order']});
 
 annotate service.getOrdersCount with(status @Common.ValueList: {

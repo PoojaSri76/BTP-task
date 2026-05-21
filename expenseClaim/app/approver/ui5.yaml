@@ -2,7 +2,7 @@
 
 specVersion: "4.0"
 metadata:
-  name: order
+  name: approver
 type: application
 server:
   customMiddleware:
@@ -26,19 +26,3 @@ server:
       configuration:
         flp:
           theme: sap_horizon
-resources:
-  configuration:
-    propertiesFileSourceEncoding: UTF-8
-builder:
-  resources:
-    excludes:
-      - "/test/**"
-      - "/localService/**"
-  customTasks:
-    - name: ui5-task-zipper
-      afterTask: generateVersionInfo
-      configuration:
-        archiveName: order
-        relativePaths: true
-        additionalFiles:
-          - xs-app.json

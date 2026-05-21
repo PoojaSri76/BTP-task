@@ -5,15 +5,13 @@ service retailService {
     entity Product  as projection on db.Product;
     entity Customer as projection on db.Customer;
 
+    entity OrderTimeline as projection on db.OrderTimeline;
+
+    entity Shipping as projection on db.Shipping;
     @odata.draft.enabled
     entity Order as projection on db.Orders actions{
         action orderDelivery();
     };
-
-    // @odata.draft.enabled
-    entity OrderTimeline as projection on db.OrderTimeline;
-
-    entity Shipping as projection on db.Shipping;
 
     // action insertOrderTimeline(order_ID: String, status:String, note:String);
 
