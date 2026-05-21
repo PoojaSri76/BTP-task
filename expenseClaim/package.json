@@ -14,7 +14,8 @@
   "scripts": {
     "start": "cds-serve",
     "watch-employee": "cds watch --open employee/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "watch-approver": "cds watch --open approver/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "watch-approver": "cds watch --open approver/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-analytics": "cds watch --open analytics/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "private": true,
   "cds": {
@@ -32,6 +33,7 @@
   ],
   "sapux": [
     "app/employee",
-    "app/approver"
+    "app/approver",
+    "app/analytics"
   ]
 }

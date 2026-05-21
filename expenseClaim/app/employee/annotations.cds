@@ -16,7 +16,7 @@ annotate service.ExpenseClaim with @(
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'Total Amount',
+                Label: 'Claimed Amount',
                 Value: totalAmount,
             },
             {
@@ -101,7 +101,7 @@ annotate service.ExpenseClaim with @(
             $Type             : 'UI.DataField',
             Label             : 'Status',
             Value             : status,
-            @HTML5.CssDefaults: {width: '100px'}
+            @HTML5.CssDefaults: {width: '150px'}
         },
         {
             $Type        : 'UI.DataFieldForAction',
@@ -199,6 +199,10 @@ annotate service.Employee with {
     name @readonly: true
 };
 
+annotate service.ExpensePolicies with {
+    category @readonly: true
+} ;
+
 annotate service.ExpenseItem with @(
     UI.LineItem                  : [
         {
@@ -209,7 +213,7 @@ annotate service.ExpenseItem with @(
         {
             $Type: 'UI.DataField',
             Label: 'Category',
-            Value: category_ID
+            Value: category.category
         },
         {
             $Type: 'UI.DataField',
@@ -233,7 +237,20 @@ annotate service.ExpenseItem with @(
             {
                 $Type: 'UI.DataField',
                 Label: 'Category',
-                Value: category_ID
+                Value: category_ID,
+                 ![@UI.Hidden]: {$edmJson: {$Eq: [
+                {$Path: 'IsActiveEntity'},
+                true
+            ]}}
+            },
+            {
+                $Type: 'UI.DataField',
+                Label: 'Category',
+                Value: category.category,
+                ![@UI.Hidden]: {$edmJson: {$Eq: [
+                {$Path: 'IsActiveEntity'},
+                false
+            ]}}
             },
             {
                 $Type: 'UI.DataField',
@@ -324,9 +341,12 @@ annotate service.ExpenseItem with {
 
 annotate service.ExpenseClaim with actions{
     submitClaim @Common.SideEffects     : {TargetProperties: [
-        'status'
+        'status',
+        'criticality',
+        'claimDate'
     ]};
     withdrawClaim @Common.SideEffects     : {TargetProperties: [
-        'status'
+        'status',
+        'criticality'
     ]}
 } ;

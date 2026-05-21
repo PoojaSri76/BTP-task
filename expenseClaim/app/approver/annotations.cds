@@ -16,7 +16,7 @@ annotate service.ExpenseClaim with @(
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'Total Amount',
+                Label: 'Claimed Amount',
                 Value: totalAmount,
             },
             {
@@ -52,6 +52,18 @@ annotate service.ExpenseClaim with @(
             }
         ]
     },
+    UI.FieldGroup #Review           : {
+        $Type: 'UI.FieldGroupType',
+        Data : [{
+            $Type        : 'UI.DataFieldForAction',
+            Label        : 'Complete Review',
+            Action       : 'ManagerService.CompleteReview',
+            ![@UI.Hidden]: {$edmJson: {$Not: {$Eq: [
+                {$Path: 'status'},
+                'Submitted'
+            ]}}},
+        }]
+    },
     UI.Facets                       : [
         {
             $Type : 'UI.ReferenceFacet',
@@ -66,11 +78,24 @@ annotate service.ExpenseClaim with @(
             Target: '@UI.FieldGroup#ClaimApprovalInfo',
         },
         {
-            $Type : 'UI.ReferenceFacet',
-            ID    : 'ClaimItems',
+            $Type : 'UI.CollectionFacet',
+            ID    : 'ClaimItemsSection',
             Label : 'Claim Items',
-            Target: 'expenseItems/@UI.LineItem'
-        }
+            Facets: [
+                {
+                    $Type: 'UI.ReferenceFacet',
+                    ID    : 'ReviewActionsFacet',
+                    Label : 'Review actions',
+                    Target: '@UI.FieldGroup#Review'
+                },
+                {
+                    $Type : 'UI.ReferenceFacet',
+                    ID    : 'ClaimItemsTableFacet',
+                    Target: 'expenseItems/@UI.LineItem'
+                },
+            ]
+        },
+
     ],
     UI.LineItem                     : [
         {
@@ -109,18 +134,15 @@ annotate service.ExpenseClaim with @(
                 {$Path: 'status'},
                 'Submitted'
             ]}}},
-            Inline       : true
+            Inline       : true,
+            Criticality  : #Positive
         }
     ],
-    UI.Identification               : [{
-        $Type        : 'UI.DataFieldForAction',
-        Label        : 'Complete Review',
-        Action       : 'ManagerService.CompleteReview',
-        ![@UI.Hidden]: {$edmJson: {$Not: {$Eq: [
-            {$Path: 'status'},
-            'Submitted'
-        ]}}},
-    }],
+     UI.HeaderInfo              : {
+        TypeName      : '',
+        TypeNamePlural: '',
+        Title         : ''
+    },
 );
 
 annotate service.ExpenseItem with {
@@ -192,6 +214,11 @@ annotate service.Employee with {
     name @readonly: true
 };
 
+annotate service.ExpensePolicies with {
+    category @readonly: true
+};
+
+
 annotate service.ExpenseItem with @(
     UI.LineItem                  : [
         {
@@ -202,9 +229,8 @@ annotate service.ExpenseItem with @(
         {
             $Type             : 'UI.DataField',
             Label             : 'Category',
-            Value             : category_ID,
+            Value             : category.category,
             @HTML5.CssDefaults: {width: '100px'}
-
         },
         {
             $Type: 'UI.DataField',
@@ -252,7 +278,7 @@ annotate service.ExpenseItem with @(
             {
                 $Type: 'UI.DataField',
                 Label: 'Category',
-                Value: category_ID
+                Value: category.category
             },
             {
                 $Type: 'UI.DataField',
@@ -315,8 +341,24 @@ annotate service.ExpenseItem with @(
             Label : 'Status Information',
             Target: '@UI.FieldGroup#ItemStatusInfo',
         },
-    ]
+    ],
+     UI.HeaderInfo              : {
+        TypeName      : 'ExpenseItem',
+        TypeNamePlural: 'ExpenseItem',
+        Title         : {
+            $Type: 'UI.DataField',
+            Value: category.category
+        },
+        Description   : {
+            $Type: 'UI.DataField',
+            Value: convertedAmount
+        },
+    },
 );
+
+annotate service.ExpenseClaim with @Capabilities.DeleteRestrictions: {
+    Deletable: false
+};
 
 annotate service.ExpenseItem with actions {
     approveClaim @Common.SideEffects: {TargetProperties: ['status']};
