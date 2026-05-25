@@ -46,7 +46,10 @@ service ReimbursementService {
                 @Aggregation.default: #SUM
                 sum(I.convertedAmount) as TotalAmount : Decimal(15, 2)
         }
-        where I.status = 'Paid' group by P.category;
+        where
+            I.status = 'Paid'
+        group by
+            P.category;
 
     function getPendingReimbursements() returns array of Reimbursement;
 }
@@ -68,3 +71,73 @@ service ManagerService {
         };
 
 }
+
+annotate ReimbursementService.Reimbursement with @restrict: [
+
+    {
+        grant: ['READ'],
+        to   : 'Finance'
+    },
+
+    {
+        grant: ['processReimbursement'],
+        to   : 'Finance'
+    },
+
+    {
+        grant: '*',
+        to   : 'Administrator'
+    }
+];
+
+ 
+annotate ExpenseService.ExpenseClaim with @restrict: [
+    {
+        grant: ['WRITE', 'READ'],
+        to: 'Employee'
+    },
+     {
+        grant: ['submitClaim', 'withdrawClaim'],
+        to: 'Employee'
+    },
+    {
+        grant: '*',
+        to: 'Administrator'
+    },
+ 
+];
+
+annotate ManagerService.ExpenseClaim with @restrict:[
+     {
+        grant: ['WRITE', 'READ'],
+        to: 'Manager'
+    },
+     { grant: ['completeReview'], to: 'Manager' },
+    {
+        grant: '*',
+        to: 'Administrator'
+    },
+] ;
+
+annotate ManagerService.ExpenseItem with @restrict:[
+   {
+      grant: ['READ','WRITE'],
+      to: 'Manager'
+   },
+   {
+      grant: ['approveClaim','rejectClaim'],
+      to: 'Manager'
+   },
+   {
+      grant: '*',
+      to: 'Administrator'
+   }
+];
+ 
+annotate ExpenseService.Employee with {
+    bankAccount @restrict: [
+        { grant: 'READ', to: 'Finance' },
+        { grant: 'READ', to: 'Administrator' }
+    ];
+};
+ 

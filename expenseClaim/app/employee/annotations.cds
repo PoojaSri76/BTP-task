@@ -42,7 +42,7 @@ annotate service.ExpenseClaim with @(
             {
                 $Type: 'UI.DataField',
                 Label: 'Approved By',
-                Value: approvedBy.name
+                Value: approvedBy.fullName
             },
             {
                 $Type: 'UI.DataField',
@@ -151,7 +151,7 @@ annotate service.ExpenseClaim with {
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'name',
+                ValueListProperty: 'fullName',
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
@@ -181,7 +181,7 @@ annotate service.ExpenseClaim with {
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'name',
+                ValueListProperty: 'fullName',
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
@@ -196,7 +196,7 @@ annotate service.ExpenseClaim with {
 };
 
 annotate service.Employee with {
-    name @readonly: true
+    fullName @readonly: true
 };
 
 annotate service.ExpensePolicies with {

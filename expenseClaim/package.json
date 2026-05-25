@@ -1,31 +1,46 @@
 {
-  "name": "expenseClaim",
+  "name": "expenseClaimManagement",
   "version": "1.0.0",
   "dependencies": {
     "@cap-js/hana": "^2.8.0",
     "@sap-cloud-sdk/http-client": "^4.6.0",
     "@sap-cloud-sdk/resilience": "^4.6.0",
-    "@sap/cds": "^9"
+    "@sap/cds": "^9.9.1",
+    "@sap/xssec": "^4"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2.4",
-    "cds-plugin-ui5": "^0.13.0"
+    "@sap/cds-dk": "^9",
+    "cds-plugin-ui5": "^0.13.0",
+    "mbt": "^1.2.29",
+    "rimraf": "^5.0.5"
   },
   "scripts": {
     "start": "cds-serve",
     "watch-employee": "cds watch --open employee/index.html?sap-ui-xx-viewCache=false --livereload false",
     "watch-approver": "cds watch --open approver/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "watch-analytics": "cds watch --open analytics/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "watch-analytics": "cds watch --open analytics/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-finance": "cds watch --open finance/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "undeploy": "cf undeploy expenseClaim --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   },
   "private": true,
   "cds": {
     "requires": {
+      "auth": "xsuaa",
       "currencyAPI": {
         "kind": "rest",
         "credentials": {
           "destination": "Currency-Converter"
         }
-      }
+      },
+      "[production]": {
+        "auth": "xsuaa"
+      },
+      "destinations": true,
+      "html5-repo": true,
+      "workzone": true
     }
   },
   "workspaces": [
@@ -34,6 +49,7 @@
   "sapux": [
     "app/employee",
     "app/approver",
-    "app/analytics"
+    "app/analytics",
+    "app/finance"
   ]
 }

@@ -1,7 +1,7 @@
 {
   "_version": "1.84.0",
   "sap.app": {
-    "id": "employee",
+    "id": "employeeportal",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -22,6 +22,18 @@
         "settings": {
           "annotations": [],
           "odataVersion": "4.01"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "employee-display": {
+          "semanticObject": "employee",
+          "action": "display",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
         }
       }
     }
@@ -193,5 +205,9 @@
     "app": {
       "enableLazyLoading": true
     }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "expenseClaim.service"
   }
 }

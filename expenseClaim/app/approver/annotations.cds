@@ -11,6 +11,11 @@ annotate service.ExpenseClaim with @(
             },
             {
                 $Type: 'UI.DataField',
+                Label: 'Employee Name',
+                Value: fullName
+            },
+            {
+                $Type: 'UI.DataField',
                 Label: 'Trip Purpose',
                 Value: tripPurpose,
             },
@@ -43,7 +48,7 @@ annotate service.ExpenseClaim with @(
             {
                 $Type: 'UI.DataField',
                 Label: 'Approved By',
-                Value: approvedBy.name
+                Value: approvedBy.fullName
             },
             {
                 $Type: 'UI.DataField',
@@ -83,7 +88,7 @@ annotate service.ExpenseClaim with @(
             Label : 'Claim Items',
             Facets: [
                 {
-                    $Type: 'UI.ReferenceFacet',
+                    $Type : 'UI.ReferenceFacet',
                     ID    : 'ReviewActionsFacet',
                     Label : 'Review actions',
                     Target: '@UI.FieldGroup#Review'
@@ -102,6 +107,11 @@ annotate service.ExpenseClaim with @(
             $Type: 'UI.DataField',
             Label: 'Claim Date',
             Value: claimDate,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Employee Name',
+            Value: fullName
         },
         {
             $Type             : 'UI.DataField',
@@ -138,7 +148,7 @@ annotate service.ExpenseClaim with @(
             Criticality  : #Positive
         }
     ],
-     UI.HeaderInfo              : {
+    UI.HeaderInfo                   : {
         TypeName      : '',
         TypeNamePlural: '',
         Title         : ''
@@ -166,7 +176,7 @@ annotate service.ExpenseClaim with {
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'name',
+                ValueListProperty: 'fullName',
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
@@ -196,7 +206,7 @@ annotate service.ExpenseClaim with {
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'name',
+                ValueListProperty: 'fullName',
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
@@ -211,7 +221,7 @@ annotate service.ExpenseClaim with {
 };
 
 annotate service.Employee with {
-    name @readonly: true
+    fullName @readonly: true
 };
 
 annotate service.ExpensePolicies with {
@@ -342,7 +352,7 @@ annotate service.ExpenseItem with @(
             Target: '@UI.FieldGroup#ItemStatusInfo',
         },
     ],
-     UI.HeaderInfo              : {
+    UI.HeaderInfo                : {
         TypeName      : 'ExpenseItem',
         TypeNamePlural: 'ExpenseItem',
         Title         : {
@@ -356,9 +366,7 @@ annotate service.ExpenseItem with @(
     },
 );
 
-annotate service.ExpenseClaim with @Capabilities.DeleteRestrictions: {
-    Deletable: false
-};
+annotate service.ExpenseClaim with @Capabilities.DeleteRestrictions: {Deletable: false};
 
 annotate service.ExpenseItem with actions {
     approveClaim @Common.SideEffects: {TargetProperties: ['status']};

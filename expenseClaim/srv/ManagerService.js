@@ -1,17 +1,27 @@
+const cds = require('@sap/cds');
 module.exports = (srv) => {
     const { Employee, ExpenseClaim, ExpenseItem } = srv.entities;
     const { Reimbursement } = cds.entities;
 
     srv.on('READ', ExpenseClaim, async (req, next) => {
+        const manager = await SELECT.one.from(Employee).where({ email: req.user.id });
+        if (!manager) return req.reject(404, "Employee not found");
+        const employees = await SELECT.from(Employee).where({ manager_ID: manager.ID })
+        if (employees.length === 0) {
+            return req.info('No employees Assigned');
+        }        
+        const empIDs = employees.map(e => e.ID);
         if (req.params.length > 0) {
             return next();
         } else {
-            const data = await SELECT.from(ExpenseClaim).where({ status: { in: ["Submitted", "ManagerReviewed"] } })
+            const data = await SELECT.from(ExpenseClaim).where({ status: { in: ["Submitted", "ManagerReviewed"] }, employee_ID: { in: empIDs } });
             return data
         }
     })
 
     srv.on('approveClaim', async (req) => {
+        const employee = await SELECT.one.from(Employee).where({ email: req.user.id });
+        if (!employee) return req.reject(404, "Employee not found")
         const claimItemID = req.params[1].ID;
         console.log(req.params);
 
@@ -22,7 +32,7 @@ module.exports = (srv) => {
 
         if (!claimItemDetails) return req.reject(404, "Claim Item not found");
         if (claimItemDetails.status !== "Submitted") return req.reject(400, "Claim cannot be approved");
-        const updatedItems = await UPDATE(ExpenseItem).set({ status: 'ManagerApproved', }).where({ ID: claimItemID });
+        const updatedItems = await UPDATE(ExpenseItem).set({ status: 'ManagerApproved', approvedBy_ID: employee.ID }).where({ ID: claimItemID });
     })
 
     srv.on('rejectClaim', async (req) => {

@@ -1,24 +1,55 @@
 const cds = require('@sap/cds');
 // const axios = require('axios');
 module.exports = async (srv) => {
-    console.log("ExpenseService");
-    const { ExpensePolicies, ExpenseClaim, ExpenseItem } = srv.entities;
+    srv.before('*', req => {
+        console.log(req.user)
+    })
+
+    const { Employee, ExpensePolicies, ExpenseClaim, ExpenseItem } = srv.entities;
 
     const currencyConverter = await cds.connect.to('currencyAPI');
 
+    srv.before('CREATE', Employee, async (req) => {
+        console.log(req.data);
+        const fullName = req.data.email.split("@")[0];
+        console.log(fullName);
+        req.data.fullName = fullName;
+
+
+    })
+
+    srv.on('READ', ExpenseClaim, async (req, next) => {
+        const employee = await SELECT.one.from(Employee).where({ email: req.user.id });
+        if (!employee) return req.reject(404, "Employee not found")
+        if (req.params.length > 0) {
+            return next();
+        } else {
+            const data = await SELECT.from(ExpenseClaim).where({ employee_ID: employee.ID })
+            console.log(data);
+
+            return data
+        }
+    })
+
     srv.before('CREATE', ExpenseClaim, async (req) => {
+        const employee = await SELECT.one.from(Employee).where({ email: req.user.id });
+        if (!employee) return req.reject(404, "Employee not found")
+        req.data.employee_ID = employee.ID;
         req.data.currency = "INR";
         req.data.status = "Draft";
-        // read.data.employee_ID = req.user.ID;
+
         console.log(req.data);
         if (req.data.expenseItems) {
             for (const item of req.data.expenseItems) {
                 item.status = "Draft";
+                const policy = await SELECT.one.from(ExpensePolicies).where({ID:category_ID});
+                const validCurrency = policy.currenciesAllowed.includes(item.currency)
+                if (!validCurrency) req.reject(400, `Currency is not valid for ${policy.category}`)
                 if (item.currency !== 'INR') {
                     try {
                         const res = await currencyConverter.send({
                             method: 'GET',
-                             path: `/latest?base=${item.currency}&symbols=INR`
+                            path: `/latest?base=${item.currency}&symbols=INR`
                         });
                         const rate = Number(res.rates.INR);
                         item.convertedAmount = rate * Number(item.amount);
@@ -54,7 +85,7 @@ module.exports = async (srv) => {
         }
         if (req.data.expenseItems) {
             console.log(req.data.expenseItems);
-            
+
             for (const item of req.data.expenseItems) {
                 if (item.currency !== 'INR') {
                     try {
@@ -93,7 +124,7 @@ module.exports = async (srv) => {
             req.reject(400, 'Only draft claims can be submitted')
         }
         const claimItems = await SELECT.from(ExpenseItem).where({ expenseClaim_ID: claim.ID });
-        const policies = await SELECT.from(ExpensePolicies);        
+        const policies = await SELECT.from(ExpensePolicies);
         // Receipt check
         for (const e of claimItems) {
             const policy = policies.find(p => p.ID == e.category_ID);
@@ -110,8 +141,8 @@ module.exports = async (srv) => {
             return acc
         }, {})
 
-            console.log("claims bu category........", claimsByCategory) ;
-        for (const key in claimsByCategory) {            
+        console.log("claims bu category........", claimsByCategory);
+        for (const key in claimsByCategory) {
             const policy = policies.find(e => e.ID == key);
             if (Number(claimsByCategory[key]) > policy.maxAmountPerClaim) {
                 const policyViolation = await UPDATE(ExpenseItem).set({ policyViolation: true }).where({ expenseClaim_ID: claim.ID, category_ID: key })
@@ -129,7 +160,7 @@ module.exports = async (srv) => {
         }, {})
 
         console.log("Claims by date.........", claimsByDate);
-        
+
         for (const key in claimsByDate) {
             const policy = policies.find(e => e.ID == key.split('_')[1]);
             console.log(policy);
@@ -159,7 +190,7 @@ module.exports = async (srv) => {
         const updatedItems = await UPDATE(ExpenseItem).set({ status: 'Withdrawn' }).where({ expenseClaim_ID: claimID })
     })
 
-     srv.after('READ', ExpenseItem, async (data) => {
+    srv.after('READ', ExpenseItem, async (data) => {
         data.forEach(e => {
             if (e.policyViolation == false) return e.criticality = 3;
             else if (e.policyViolation == true) return e.criticality = 1;

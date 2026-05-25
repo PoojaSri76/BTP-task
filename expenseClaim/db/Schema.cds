@@ -12,7 +12,7 @@ entity Department : cuid {
 
 entity Employee : cuid {
     empNo       : String(100);
-    name        : String(100);
+    fullName        : String(100);
     email       : String;
     bankAccount : String;
     department  : Association to one Department;

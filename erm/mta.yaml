@@ -1,0 +1,222 @@
+_schema-version: 3.3.0
+ID: erm
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+  deploy_mode: html5-repo
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+  - name: erm-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      instances: 1
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: erm-auth
+      - name: erm-db
+      - name: erm-destination
+
+  - name: erm-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: erm-db
+  - name: erm
+    type: approuter.nodejs
+    path: app/router
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api # must be used in xs-app.json as well
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: erm-auth
+      - name: erm-destination
+      - name: erm-html5-runtime
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
+
+  - name: erm-app-deployer
+    type: com.sap.application.content
+    path: gen
+    build-parameters:
+      build-result: app/
+      requires:
+        - name: ermapprover
+          artifacts:
+            - approver.zip
+          target-path: app/
+        - name: ermemployee
+          artifacts:
+            - employee.zip
+          target-path: app/
+        - name: ermfinance
+          artifacts:
+            - finance.zip
+          target-path: app/
+    requires:
+      - name: erm-auth
+      - name: srv-api
+      - name: erm-html5-repo-host
+        parameters:
+          content-target: true
+          config:
+            HTML5Runtime_enabled: true
+    parameters:
+      config:
+        destinations:
+          - Name: srv-api
+            URL: ~{srv-api/srv-url}
+            Authentication: NoAuthentication
+            Type: HTTP
+            ProxyType: Internet
+            HTML5.ForwardAuthToken: true
+            HTML5.DynamicDestination: true
+
+  - name: ermapprover
+    type: html5
+    path: app/approver
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm ci
+        - npm run build
+      supported-platforms:
+        []
+  - name: ermemployee
+    type: html5
+    path: app/employee
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm ci
+        - npm run build
+      supported-platforms:
+        []
+  - name: ermfinance
+    type: html5
+    path: app/finance
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm ci
+        - npm run build
+      supported-platforms:
+        []
+
+  - name: erm-destinations
+    type: com.sap.application.content
+    requires:
+      - name: erm-auth
+        parameters:
+          service-key:
+            name: erm-auth-key
+      - name: erm-html5-repo-host
+        parameters:
+          service-key:
+            name: erm-html5-repo-host-key
+      - name: srv-api
+      - name: erm-destination
+        parameters:
+          content-target: true
+    build-parameters:
+      no-source: true
+    parameters:
+      content:
+        instance:
+          existing_destinations_policy: update
+          destinations:
+            - Name: erm-html5-repository
+              ServiceInstanceName: erm-html5-repo-host
+              ServiceKeyName: erm-html5-repo-host-key
+              sap.cloud.service: erm.service
+            - Name: erm-auth
+              Authentication: OAuth2UserTokenExchange
+              ServiceInstanceName: erm-auth
+              ServiceKeyName: erm-auth-key
+              sap.cloud.service: erm.service
+
+resources:
+  - name: erm-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: erm-${org}-${space}
+        tenant-mode: dedicated
+        oauth2-configuration:
+          credential-types:
+            - "binding-secret"
+            - "x509"
+          redirect-uris:
+            - https://*~{app-api/app-uri}/**
+        role-collections:
+          - name: 'Employee (erm ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.Employee'
+          - name: 'Administrator (erm ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.Administrator'
+          - name: 'Finance (erm ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.Finance'
+          - name: 'Manager (erm ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.Manager'
+    requires:
+      - name: app-api
+  - name: erm-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: erm-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+    requires:
+      - name: srv-api
+
+  - name: erm-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+  - name: erm-html5-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
