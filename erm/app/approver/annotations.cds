@@ -1,4 +1,5 @@
 using ApproverService as service from '../../srv/service';
+
 annotate service.ExpenseClaim with @(
     UI.FieldGroup #GeneralInfo      : {
         $Type: 'UI.FieldGroupType',
@@ -43,11 +44,6 @@ annotate service.ExpenseClaim with @(
                 $Type: 'UI.DataField',
                 Label: 'Approved Amount',
                 Value: approvedAmount
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'Approved By',
-                Value: approvedBy.empName
             },
             {
                 $Type: 'UI.DataField',
@@ -108,9 +104,10 @@ annotate service.ExpenseClaim with @(
             Value: claimDate,
         },
         {
-            $Type: 'UI.DataField',
-            Label: 'Employee Name',
-            Value: employee.empName
+            $Type             : 'UI.DataField',
+            Label             : 'Employee Name',
+            Value             : employee.empName,
+            @HTML5.CssDefaults: {width: '150px'}
         },
         {
             $Type             : 'UI.DataField',
@@ -119,9 +116,11 @@ annotate service.ExpenseClaim with @(
             @HTML5.CssDefaults: {width: '150px'}
         },
         {
-            $Type: 'UI.DataField',
-            Label: 'Total Amount',
-            Value: totalAmount,
+            $Type             : 'UI.DataField',
+            Label             : 'Total Amount',
+            Value             : totalAmount,
+            @HTML5.CssDefaults: {width: '100px'}
+
         },
         {
             $Type             : 'UI.DataField',
@@ -353,7 +352,7 @@ annotate service.ExpenseItem with @(
     ],
     UI.HeaderInfo                : {
         TypeName      : 'ExpenseItem',
-        TypeNamePlural: 'ExpenseItem',
+        TypeNamePlural: 'ExpenseItems',
         Title         : {
             $Type: 'UI.DataField',
             Value: category.category
@@ -376,5 +375,7 @@ annotate service.ExpenseClaim with actions {
     CompleteReview @Common.SideEffects: {TargetProperties: [
         'status',
         'approvedAmount'
-    ]}
+    ],
+    TargetEntities: ['Employee']
+    }
 };

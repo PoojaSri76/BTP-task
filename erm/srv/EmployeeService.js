@@ -28,17 +28,11 @@ module.exports = async (srv) => {
     // })
 
     srv.before('READ', ExpenseClaim, async (req) => {
-
-        const employee = await SELECT.one
-            .from(Employee)
-            .where({ email: req.user.id });
-
+        const employee = await SELECT.one.from(Employee).where({ email: req.user.id });
         if (!employee) {
             return req.reject(404, "Employee not found");
         }
-
         if (!req.query.SELECT.one) {
-
             req.query.where({
                 employee_ID: employee.ID
             });

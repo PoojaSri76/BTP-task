@@ -14,6 +14,8 @@ service ExpenseService {
         };
 
     entity ExpenseItem     as projection on db.ExpenseItem;
+    entity Currency as projection on db.Currency;
+
 }
 
 @impl: 'srv/ReimbursementService.js'

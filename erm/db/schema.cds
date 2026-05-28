@@ -90,4 +90,10 @@ entity Reimbursement : cuid {
         Failed;
     };
     amount        : Decimal(15, 2);
+    virtual statusCriticality: Integer;
+}
+
+entity Currency {
+    key code: String(3);
+    name: String(100)
 }

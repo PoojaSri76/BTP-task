@@ -1,7 +1,7 @@
 using ReimbursementService as service from '../../srv/service';
 
 annotate service.Reimbursement with @(
-    UI.FieldGroup #GeneratedGroup: {
+    UI.FieldGroup #GeneratedGroup                 : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
@@ -20,9 +20,10 @@ annotate service.Reimbursement with @(
                 Value: expenseClaim.approvedBy.empName,
             },
             {
-                $Type: 'UI.DataField',
-                Label: 'Status',
-                Value: status,
+                $Type      : 'UI.DataField',
+                Label      : 'Status',
+                Value      : status,
+                Criticality: statusCriticality
             },
             {
                 $Type: 'UI.DataField',
@@ -33,38 +34,50 @@ annotate service.Reimbursement with @(
                 $Type: 'UI.DataField',
                 Label: 'Transaction ID',
                 Value: paymentRef,
+            },
+            {
+                 $Type: 'UI.DataField',
+                Label: 'Processed By',
+                Value: processedBy.empName,
             }
         ],
     },
-    UI.Facets                    : [{
+    UI.Facets                                     : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'GeneratedFacet1',
         Label : 'General Information',
         Target: '@UI.FieldGroup#GeneratedGroup',
     }, ],
-    UI.LineItem                  : [
+    UI.LineItem                                   : [
         {
-            $Type: 'UI.DataField',
-            Label: 'Employee',
-            Value: expenseClaim.employee.empName,
+            $Type             : 'UI.DataField',
+            Label             : 'Employee',
+            Value             : expenseClaim.employee.empName,
             @HTML5.CssDefaults: {width: '150px'}
         },
         {
-            $Type: 'UI.DataField',
-            Label: 'Purpose',
-            Value: expenseClaim.tripPurpose,
+            $Type             : 'UI.DataField',
+            Label             : 'Purpose',
+            Value             : expenseClaim.tripPurpose,
             @HTML5.CssDefaults: {width: '200px'}
         },
         {
-            $Type: 'UI.DataField',
-            Label: 'Approved By',
-            Value: expenseClaim.approvedBy.empName,
+            $Type             : 'UI.DataField',
+            Label             : 'Approved By',
+            Value             : expenseClaim.approvedBy.empName,
             @HTML5.CssDefaults: {width: '150px'}
         },
         {
-            $Type: 'UI.DataField',
-            Label: 'Amount',
-            Value: amount,
+            $Type             : 'UI.DataField',
+            Label             : 'Amount',
+            Value             : amount,
+            @HTML5.CssDefaults: {width: '100px'}
+        },
+        {
+            $Type             : 'UI.DataField',
+            Label             : 'Status',
+            Value             : status,
+            Criticality       : statusCriticality,
             @HTML5.CssDefaults: {width: '100px'}
         },
         {
@@ -78,6 +91,15 @@ annotate service.Reimbursement with @(
             ]}}},
         },
     ],
+    UI.HeaderInfo                : {
+        TypeName      : 'Reimbursement',
+        TypeNamePlural: 'Reimbursements',
+        Title         : {
+            $Type: 'UI.DataField',
+            Value: expenseClaim.employee.empName
+        },
+        Description   : ''
+    },
     Analytics.AggregatedProperty #amount_sum : {
         $Type : 'Analytics.AggregatedPropertyType',
         Name : 'amount_sum',
@@ -96,55 +118,6 @@ annotate service.Reimbursement with @(
             '@Analytics.AggregatedProperty#ID_countdistinct',
         ],
     },
-    UI.SelectionPresentationVariant #alpChart : {
-        $Type : 'UI.SelectionPresentationVariantType',
-        PresentationVariant : {
-            $Type : 'UI.PresentationVariantType',
-            Visualizations : [
-                '@UI.Chart#alpChart',
-            ],
-        },
-        SelectionVariant : {
-            $Type : 'UI.SelectionVariantType',
-            SelectOptions : [
-            ],
-        },
-    },
-    UI.SelectionPresentationVariant #alpChart1 : {
-        $Type : 'UI.SelectionPresentationVariantType',
-        PresentationVariant : {
-            $Type : 'UI.PresentationVariantType',
-            Visualizations : [
-                '@UI.Chart#alpChart',
-            ],
-        },
-        SelectionVariant : {
-            $Type : 'UI.SelectionVariantType',
-            SelectOptions : [
-            ],
-        },
-    },
-    UI.SelectionPresentationVariant #alpChart2 : {
-        $Type : 'UI.SelectionPresentationVariantType',
-        PresentationVariant : {
-            $Type : 'UI.PresentationVariantType',
-            Visualizations : [
-                '@UI.Chart#alpChart',
-            ],
-            SortOrder : [
-                {
-                    $Type : 'Common.SortOrderType',
-                    DynamicProperty : '@Analytics.AggregatedProperty#amount_sum',
-                    Descending : false,
-                },
-            ],
-        },
-        SelectionVariant : {
-            $Type : 'UI.SelectionVariantType',
-            SelectOptions : [
-            ],
-        },
-    },
     Analytics.AggregatedProperty #ID_countdistinct : {
         $Type : 'Analytics.AggregatedPropertyType',
         Name : 'ID_countdistinct',
@@ -152,6 +125,7 @@ annotate service.Reimbursement with @(
         AggregationMethod : 'countdistinct',
         @Common.Label : 'ID (Count Distinct Values)',
     },
+  
 );
 
 annotate service.Reimbursement with {
@@ -194,7 +168,7 @@ annotate service.Reimbursement with {
 
 annotate service.Reimbursement with actions {
     processReimbursement @Common.IsActionCritical: true
-                         @Common.SideEffects     : {TargetProperties: ['status']}
+                         @Common.SideEffects     : {TargetProperties: ['status', 'statusCriticality']}
 };
 
 annotate service.ExpenseClaim with {
@@ -213,7 +187,7 @@ annotate service.ExpenseClaim with {
             },
         ]
     }
-} ;
+};
 
 
 annotate service.ExpenseClaim with {
@@ -232,7 +206,7 @@ annotate service.ExpenseClaim with {
             },
         ]
     }
-} ;
+};
 
 // status chart
 annotate service.Reimbursement with @Aggregation.ApplySupported: {
@@ -243,27 +217,27 @@ annotate service.Reimbursement with @Aggregation.ApplySupported: {
         'search'
     ],
     GroupableProperties   : [
-        status        
+        status,
     ],
     AggregatableProperties: [
-        { Property: amount },
-        { Property: ID}
+        {Property: amount},
+        {Property: ID}
     ]
 };
 
-annotate service.ExpenseItem with @Aggregation.ApplySupported: {
-    Transformations       : [
-        'aggregate',
-        'groupby',
-        'filter',
-        'search'
-    ],
+// annotate service.ExpenseItem with @Aggregation.ApplySupported: {
+//     Transformations       : [
+//         'aggregate',
+//         'groupby',
+//         'filter',
+//         'search'
+//     ],
 
-    GroupableProperties   : [
-        category
-    ],
+//     GroupableProperties   : [
+//         category
+//     ],
 
-    AggregatableProperties: [
-        { Property: convertedAmount }
-    ]
-};
+//     AggregatableProperties: [
+//         { Property: convertedAmount }
+//     ]
+// };

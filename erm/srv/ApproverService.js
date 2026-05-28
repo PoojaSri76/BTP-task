@@ -14,7 +14,7 @@ module.exports = (srv) => {
         if (req.params.length > 0) {
             return next();
         } else {
-            const data = await SELECT.from(ExpenseClaim).where({ status: { in: ["Submitted", "ManagerReviewed"] }, employee_ID: { in: empIDs } });
+            const data = await SELECT.from(ExpenseClaim).where({ status: { in: ["Submitted", "ManagerReviewed", "Paid", "Rejected"] }, employee_ID: { in: empIDs } });
             return data
         }
     })
@@ -50,19 +50,26 @@ module.exports = (srv) => {
     srv.on('CompleteReview', async (req) => {
         const { ID } = req.params[0];
         const employee = await SELECT.one.from(Employee).where({ email: req.user.id });
-        if (!employee) return req.reject(404, "Employee not found")
+        if (!employee) return req.reject(404, "Employee not found");
         const claimItems = await SELECT.from(ExpenseItem).where({ expenseClaim_ID: ID });
-        for (const item of claimItems) {
-            if (item.status !== "ManagerApproved" && item.status !== "Rejected") return req.reject(400, "Complete review for all items before submission")
+        const allReviewed = claimItems.every(item => item.status === "ManagerApproved" || item.status === "Rejected");
+        if (!allReviewed) {
+            return req.reject(400, "Complete review for all items before submission");
         }
-        const approvedAmount = claimItems.filter(item => item.status == "ManagerApproved").reduce((acc, e) => acc + Number(e.convertedAmount), 0);
-        const updatedClaim = await UPDATE(ExpenseClaim).set({ status: "ManagerReviewed", approvedAmount, approvedBy_ID: employee.ID }).where({ ID })
-        console.log(updatedClaim);
-        const claimReimbursement = await INSERT.into(Reimbursement).entries({
-            expenseClaim_ID: ID,
-            status: "Pending",
-            amount: approvedAmount
-        })
+        const hasApproved = claimItems.some(item => item.status === "ManagerApproved");
+        if (hasApproved) {
+            const approvedAmount = claimItems.filter(item => item.status == "ManagerApproved").reduce((acc, e) => acc + Number(e.convertedAmount), 0);
+            const updatedClaim = await UPDATE(ExpenseClaim).set({ status: "ManagerReviewed", approvedAmount, approvedBy_ID: employee.ID }).where({ ID })
+            console.log(updatedClaim);
+            const claimReimbursement = await INSERT.into(Reimbursement).entries({
+                expenseClaim_ID: ID,
+                status: "Pending",
+                amount: approvedAmount
+            })
+        } else {
+            const updatedClaim = await UPDATE(ExpenseClaim).set({ status: "Rejected", approvedAmount: 0, approvedBy_ID: employee.ID }).where({ ID })
+        }
+
     })
 
     srv.after('READ', ExpenseItem, async (data) => {

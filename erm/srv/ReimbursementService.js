@@ -1,10 +1,8 @@
 const cds = require("@sap/cds");
-const { SELECT } = require("@sap/cds/lib/ql/cds-ql");
-const { Anonymous } = require("@sap/cds/lib/req/user");
 
 module.exports = (srv) => {
     console.log("ReimbursementService");
-    const { Reimbursement } = srv.entities;
+    const { Reimbursement,Employee } = srv.entities;
     const {ExpenseClaim, ExpenseItem} = cds.entities;
 
     srv.on('processReimbursement', async (req) => {
@@ -12,6 +10,9 @@ module.exports = (srv) => {
         const paymentRef = `PAY-${Math.floor(Math.random() * 1000000)}`;
         const reimbursement = await SELECT.one.from(Reimbursement).where({ID});
         console.log(reimbursement);
+
+        const employee = await SELECT.one.from(Employee).where({ email: req.user.id });
+        if (!employee) return req.reject(404, "Employee not found")
         
         if (!reimbursement) return req.reject(404, "Reimbursement not found");
         const claim = await SELECT.one.from(ExpenseClaim).where({ID:reimbursement.expenseClaim_ID});
@@ -22,7 +23,8 @@ module.exports = (srv) => {
             processedBy_ID: req.user.ID || 'Anonymous',
             processedDate: new Date(),
             status: 'Paid',
-            paymentRef
+            paymentRef,
+            processedBy_ID: employee.ID
         }).where({ ID });
         if (processCompleted == 1) {
             const claimUpdate = await UPDATE(ExpenseClaim).set({status: "Paid", paidOn: new Date()}).where({ID: claim.ID});
@@ -31,8 +33,16 @@ module.exports = (srv) => {
     })
 
     srv.on('getPendingReimbursements', async(req)=>{
-        const pendingData = await SELECT.from(Reimbursement).where({status: 'Pending'})
+        const pendingData = await SELECT.from('Reimbursement').where({status: 'Pending'})
         return pendingData
+    })
+
+    srv.after('READ', Reimbursement, async(data)=>{
+         data.forEach(e => {
+            if (e.status == "Pending") return e.statusCriticality = 2;
+            else if (e.status == "Failed") return e.statusCriticality = 1;
+            else if (e.status == "Paid") return e.statusCriticality = 3;
+        })
     })
 
 }

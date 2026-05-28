@@ -42,7 +42,7 @@ annotate service.ExpenseClaim with @(
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'Approved By',
+                Label: 'Reviewed By',
                 Value: approvedBy.empName
             },
             {
@@ -129,6 +129,15 @@ annotate service.ExpenseClaim with @(
             Criticality: #Negative
         }
     ],
+    UI.HeaderInfo                : {
+        TypeName      : 'ExpenseClaim',
+        TypeNamePlural: 'ExpenseClaims',
+        Title         : {
+            $Type: 'UI.DataField',
+            Value: tripPurpose
+        },
+        Description   : ''
+    },
 );
 
 annotate service.ExpenseItem with {
@@ -318,7 +327,19 @@ annotate service.ExpenseItem with @(
                 false
             ]}}
         },
-    ]
+    ],
+    UI.HeaderInfo                : {
+        TypeName      : 'ExpenseItem',
+        TypeNamePlural: 'ExpenseItems',
+        Title         : {
+            $Type: 'UI.DataField',
+            Value: category.category
+        },
+        Description   : {
+            $Type: 'UI.DataField',
+            Value: convertedAmount
+        },
+    },
 );
 
 
@@ -351,3 +372,21 @@ annotate service.ExpenseClaim with actions{
         'criticality'
     ]}
 } ;
+
+annotate service.ExpenseItem with {
+    currency @Common.ValueList: {
+        $Type         : 'Common.ValueListType',
+        CollectionPath: 'Currency',
+        Parameters    : [
+            {
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: currency,
+                ValueListProperty: 'code',
+            },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'name',
+            },
+        ],
+    }
+};
