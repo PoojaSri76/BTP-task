@@ -1,0 +1,14 @@
+<core:FragmentDefinition
+xmlns="sap.m"
+xmlns:core="sap.ui.core">
+<Popover title="{product>name}" contentWidth="300px" placement="PreferredRightOrFlip">
+<VBox class="sapUiSmallMargin">
+<HBox justifyContent="SpaceBetween">
+    <Label text="{product>brand}"/>
+    <Label text="{product>category}"/>
+</HBox>
+    <Label text="Description:"/>
+    <Text text="{product>description}"/>
+</VBox>
+</Popover>
+</core:FragmentDefinition>

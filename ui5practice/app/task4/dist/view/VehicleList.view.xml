@@ -1,0 +1,155 @@
+<mvc:View
+    controllerName="task4.controller.VehicleList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:unified="sap.ui.unified"
+    xmlns:table="sap.ui.table"
+    xmlns:rowmodes="sap.ui.table.rowmodes">
+    <Page id="page" title="{i18n>title}">
+
+        <content>
+            <table:Table
+                id="vehicleTable"
+                rows="{/Vehicles}"
+                alternateRowColors="true"
+                selectionMode="MultiToggle"
+                enableColumnReordering="true"
+                width="100%">
+
+                <table:rowMode>
+                    <rowmodes:Auto />
+                </table:rowMode>
+                <table:extension>
+                    <Toolbar>
+                        <Title text="Vehicles"/>
+                        <ToolbarSpacer/>
+
+                        <SearchField
+                            id="searchField"
+                            placeholder="Search vehicle..."
+                            liveChange=".onSearch"
+                            width="400px"/>
+
+                        <Button
+                            text="Add Vehicle"
+                            icon="sap-icon://add"
+                            press=".onAddVehicle"
+                            type="Emphasized"/>
+
+                        <Button
+                            text="Edit"
+                            icon="sap-icon://edit"
+                            press=".onEdit"
+                            visible="{= !${view>/editMode} }"/>
+
+                        <Button
+                            text="Save"
+                            icon="sap-icon://save"
+                            press=".onSave"
+                            visible="{view>/editMode}"/>
+
+                        <Button
+                            text="Delete Vehicle"
+                            icon="sap-icon://delete"
+                            press=".onDeleteVehicle"
+                            type="Reject"/>
+                        
+                        <Button
+                            text="State Summary"
+                            press=".onOverallSummary"
+                            type="Default"/>
+
+                        <unified:FileUploader
+                            id="fileUploader"
+                            change="onFileChange"
+                            fileType="xlsx,xls,csv" />
+
+                        <Button
+                            text="Export Excel"
+                            icon="sap-icon://excel-attachment"
+                            press=".onExportExcel"
+                            type="Success"/>
+                    </Toolbar>
+                </table:extension>
+
+                <table:columns>
+
+                    <!-- Vehicle ID -->
+                    <table:Column width="100px">
+                        <Label text="Vehicle ID"/>
+                        <table:template>
+                            <Text text="{vehicleId}"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Photo -->
+                    <table:Column width="220px">
+                        <Label text="Photo"/>
+                        <table:template>
+                            <VBox>
+
+                                <Image
+                                    src="{documents/content}"
+                                    width="100px"
+                                    height="80px"
+                                    visible="{= !!${documents/ID} }"/>
+
+                                <unified:FileUploader
+                                    name="document"
+                                    placeholder="Upload..."
+                                    buttonText="Upload Document"
+                                    change=".onDocumentUpload"
+                                    width="150px"/>
+                                    
+                            </VBox>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Name -->
+                    <table:Column width="200px">
+                        <Label text="Name"/>
+                        <table:template>
+                            <Input
+                                value="{name}"
+                                editable="{view>/editMode}"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- State -->
+                    <table:Column width="150px">
+                        <Label text="State"/>
+                        <table:template>
+                            <Input
+                                value="{state}"
+                                editable="{view>/editMode}"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- New Price -->
+                    <table:Column width="150px">
+                        <Label text="New Price"/>
+                        <table:template>
+                            <Input
+                                value="{newPrice}"
+                                editable="{view>/editMode}"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Old Price -->
+                    <table:Column width="150px">
+                        <Label text="Old Price"/>
+                        <table:template>
+                            <Input
+                                value="{oldPrice}"
+                                editable="{view>/editMode}"/>
+                        </table:template>
+                    </table:Column>
+
+                </table:columns>
+
+            </table:Table>
+        </content>
+
+    </Page>
+
+</mvc:View>

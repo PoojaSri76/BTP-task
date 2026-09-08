@@ -1,0 +1,39 @@
+{
+  "name": "ui5practice",
+  "version": "1.0.0",
+  "dependencies": {
+    "@cap-js/hana": "^2.8.0",
+    "@sap/cds": "^9.9.3",
+    "@sap/xssec": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^2.4",
+    "@sap/cds-dk": "^9.9.4",
+    "@ui5/cli": "^4.0.57",
+    "cds-plugin-ui5": "^0.17.0"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch-task3": "cds watch --open task3/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-task4": "cds watch --open task4/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "private": true,
+  "workspaces": [
+    "app/*"
+  ],
+  "cds": {
+    "requires": {
+      "destinations": true,
+      "html5-repo": true,
+      "workzone": true,
+      "auth": {
+        "kind": "mocked"
+      },
+      "[production]": {
+        "auth": {
+          "kind": "xsuaa"
+        }
+      }
+    }
+  }
+}

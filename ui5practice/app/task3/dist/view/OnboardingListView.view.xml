@@ -1,0 +1,200 @@
+<mvc:View controllerName="task3.controller.OnboardingListView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:unified="sap.ui.unified">
+    <Page id="page" title="{i18n>title}">
+    <content>
+    <!-- employee table -->
+        <Table
+            id="employeeTable"
+            items="{
+                path: '/Employees'
+            }"
+            growing="true"
+            growingScrollToLoad="true"
+            growingThreshold="6">
+
+            <headerToolbar>
+                <Toolbar>
+
+                    <Title
+                        text="Employees"/>
+
+                    <ToolbarSpacer/>
+
+                    <SearchField
+                        id="employeeSearch"
+                        width="250px"
+                        placeholder="Search employees..."
+                        liveChange=".onSearch"/>
+
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+
+                <Column>
+                    <Text text="Employee"/>
+                </Column>
+
+                <Column>
+                    <Text text="Email"/>
+                </Column>
+
+                <Column>
+                    <Text text="Department"/>
+                </Column>
+
+                <Column>
+                    <Text text="Status"/>
+                </Column>
+
+            </columns>
+
+            <items>
+
+                <ColumnListItem
+                    type="Navigation"
+                    press=".onEmployeePress">
+
+                    <cells>
+
+                        <!-- Avatar -->
+                        <HBox alignItems="Center">
+
+                            <Avatar
+                                displaySize="S"/>
+
+                            <Text
+                                class="sapUiSmallMarginBegin"
+                                text="{
+                                    parts: [
+                                        'firstName',
+                                        'lastName'
+                                    ],
+                                    formatter: '.formatFullName'
+                                }"/>
+
+                        </HBox>
+
+                        <Text text="{email}"/>
+
+                        <Text text="{department}"/>
+
+                        <ObjectStatus
+                            text="{status}"/>
+
+                    </cells>
+
+                </ColumnListItem>
+
+            </items>
+
+        </Table>
+
+    <!-- Detail form -->
+         <VBox
+            id="employeeDetail"
+            visible="false"
+            class="sapUiMediumMargin">
+
+            <Toolbar>
+
+                <Title
+                    text="Employee Details"
+                    level="H2"/>
+
+                <ToolbarSpacer/>
+
+                <Button
+                    text="Close"
+                    press=".onCloseDetail"/>
+
+            </Toolbar>
+
+
+            <form:SimpleForm
+                id="employeeForm"
+                editable="true"
+                layout="ResponsiveGridLayout">
+
+                <form:content>
+                    <Label
+                        text="First Name"/>
+
+                    <Input
+                        value="{firstName}"/>
+
+                    <Label
+                        text="Last Name"/>
+
+                    <Input
+                        value="{lastName}"/>
+
+
+                    <!-- Email -->
+
+                    <Label
+                        text="Email"/>
+
+                    <Input
+                        value="{email}"
+                        editable="false"/>
+
+                    <Label
+                        text="Department"/>
+
+                    <Input
+                        value="{department}"/>
+
+                    <Label
+                        text="Joining Date"/>
+
+                    <DatePicker
+                        value="{joiningDate}"
+                        valueFormat="yyyy-MM-dd"
+                        displayFormat="dd-MM-yyyy"/>
+
+                    <Label
+                        text="Status"/>
+
+                    <ObjectStatus
+                        text="{status}"/>
+
+                    <Label
+                        text="Document"/>
+
+                    <unified:FileUploader
+                        id="documentUploader"
+                        name="document"
+                        placeholder="Choose document..."
+                        buttonText="Upload Document"
+                        change=".onDocumentUpload"/>
+
+                    <List 
+                    headerText="Uploaded Documents"
+                    items="{documents}">
+                    <StandardListItem title="{fileName}" />
+                    </List>
+
+                </form:content>
+
+            </form:SimpleForm>
+
+            <HBox
+                justifyContent="End"
+                class="sapUiMediumMarginTop">
+
+                <Button
+                    text="Save"
+                    type="Emphasized"
+                    press=".onSave"/>
+
+            </HBox>
+
+        </VBox>
+
+    </content>
+    </Page>
+</mvc:View>

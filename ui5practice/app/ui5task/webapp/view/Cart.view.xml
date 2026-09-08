@@ -1,0 +1,89 @@
+<mvc:View xmlns:cards="sap.f.cards"
+xmlns:mvc="sap.ui.core.mvc"
+xmlns="sap.m"
+xmlns:f="sap.f"
+xmlns:l = "sap.ui.layout"
+xmlns:grid="sap.ui.layout.cssgrid"
+controllerName="ui5task.controller.Cart">
+<Page title="{i18n>cartPageTitle}">
+    <content>
+    <l:Splitter>
+        <VBox width="800px">
+        <Panel class="sapUiResponsiveMargin">
+            <f:GridList headerText="Cart Items"
+            items="{cart>/items}">
+                <f:customLayout>
+                    <grid:GridBoxLayout boxWidth="220px"/>
+                </f:customLayout>
+                <f:GridListItem>
+                    <VBox height="100%" class="sapUiSmallMargin">
+                        <HBox justifyContent="End">
+                            <RatingIndicator maxValue="5" 
+                            class="sapUiSmallMarginBottom" 
+                            value="{cart>rating}" 
+                            displayOnly="true"
+                            iconSize="12px"/>
+                        </HBox>
+                        <Image src="{cart>image}" width="100%" height="100px"/>
+                        <Title text="{cart>name}"/>
+                        <Label text="Brand: {cart>brand}"/>
+                        <Text text="{cart>price} INR"/>
+                        <Label text="{cart>stock} stocks left"/>
+                        <HBox justifyContent="SpaceAround" class="sapUiSmallMarginTop">
+                            <Button icon="sap-icon://less" press="onRemoveFromCart"></Button>
+                            <Text text="{cart>quantity}"></Text>
+                            <Button icon="sap-icon://add" press="onAddToCart" ></Button>
+                        </HBox>
+                    </VBox>
+                </f:GridListItem>
+            </f:GridList>
+            </Panel>
+            <Panel class="sapUiResponsiveMargin">
+            <Table items="{cart>/items}">
+            <columns>
+                <Column>
+                    <Text text="Item"/>
+                </Column>
+                <Column ></Column>
+                <Column >
+                    <Text text="Total (INR)"></Text>
+                </Column>
+            </columns>
+            <items>
+            <ColumnListItem >
+            <cells>
+                <Text text="{cart>name}"/>
+                <Text text="{cart>quantity} X {cart>price}"/>
+                <ObjectNumber number="{= ${cart>quantity} * ${cart>price}}"/>
+            </cells>
+            </ColumnListItem>
+            </items>
+            </Table>
+            </Panel>
+        </VBox>
+
+        <HBox justifyContent="End" class="sapUiLargeMargin">
+            <layoutData>
+                <l:SplitterLayoutData size="30%" resizable="false"/>
+            </layoutData>
+            <f:Card class="sapUiSmallMargin" width="300px">
+                <f:header>
+                    <cards:Header title="{i18n>summaryHeader}" iconSrc="sap-icon://receipt"></cards:Header>
+                </f:header>
+                <f:content>
+                    <VBox class="sapUiMediumMargin">
+                        <Label text="{i18n>totalItems}: {cart>/summary/totalItems}"/>
+                        <Label text="{i18n>subtotal}: {cart>/summary/subTotal}"/>
+                        <Label text="{i18n>tax}: {cart>/summary/tax}"/>
+                        <Text text="{i18n>grandTotal}: {cart>/summary/grandTotal}"/>
+                        <Button text="{i18n>placeOrder}" type="Success" class="sapUiSmallMarginTop" press="onPlaceOrder"></Button>
+                    </VBox>
+                </f:content>
+            </f:Card>
+        </HBox>
+    
+    </l:Splitter>
+        
+    </content>
+</Page>
+</mvc:View>

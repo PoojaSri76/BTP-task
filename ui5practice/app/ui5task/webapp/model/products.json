@@ -1,0 +1,92 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Laptop",
+      "brand": "Dell",
+      "category": "Electronics",
+      "price": 65000,
+      "stock": 12,
+      "rating": 4.7,
+      "description": "Powerful Intel Core i7 laptop with 16GB RAM and 512GB SSD.\nPerfect for programming, gaming, and professional work.",
+      "image": "https://ui5.sap.com/test-resources/sap/ui/documentation/sdk/images/HT-1000.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Keyboard",
+      "brand": "Keychron",
+      "category": "Accessories",
+      "price": 1200,
+      "stock": 18,
+      "rating": 3.5,
+      "description": "RGB backlit mechanical keyboard with tactile blue switches.\nDesigned for gamers and fast typists with durable keycaps.",
+      "image": "https://th.bing.com/th/id/R.3e3da2afcf9f8d48a8e5d7c11ba1ef69?rik=fqNlfWK7tLLsEQ&riu=http%3a%2f%2fdesignwanted.com%2fwp-content%2fuploads%2f2022%2f12%2fMassdrop-x-MITo-Unique-keyboard-concepts.jpg&ehk=WIOuifVDm0b0vnpCzJn53NzUQx04ZYwFd3oC8gluRNs%3d&risl=&pid=ImgRaw&r=0"
+    },
+    {
+      "id": 3,
+      "name": "Wireless Mouse",
+      "brand": "Logitech",
+      "category": "Accessories",
+      "price": 900,
+      "stock": 22,
+      "rating": 4.6,
+      "description": "Ergonomic wireless mouse with adjustable DPI settings.\nLong-lasting battery life and smooth precision tracking.",
+      "image": "https://m.media-amazon.com/images/I/61YQeAUIboL._AC_.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Monitor",
+      "brand": "Samsung",
+      "category": "Electronics",
+      "price": 15000,
+      "stock": 8,
+      "rating": 3.8,
+      "description": "24-inch Full HD IPS monitor with vibrant color reproduction.\nIdeal for office work, movies, and content creation.",
+      "image": "https://viotek.com/wp-content/uploads/VIOTEK-LED-Computer-Monitor-1920x1080-Full-HD-1.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Headphones",
+      "brand": "Sony",
+      "category": "Audio",
+      "price": 2500,
+      "stock": 20,
+      "rating": 4.4,
+      "description": "Premium over-ear headphones with active noise cancellation.\nCrystal-clear sound quality and comfortable ear cushions.",
+      "image": "https://m.media-amazon.com/images/I/71wJqHHazrL.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Laser Printer",
+      "brand": "HP",
+      "category": "Office",
+      "price": 8000,
+      "stock": 6,
+      "rating": 4.3,
+      "description": "High-speed monochrome laser printer with Wi-Fi connectivity.\nPerfect for home offices and small business printing.",
+      "image": "https://www.bing.com/th?id=OPAC.rAFKwOaBahBl3Q474C474&o=5&pid=21.1&w=140&h=140&rs=1&qlt=100&dpr=1.5&o=2&c=8&pcl=f5f5f5"
+    },
+    {
+      "id": 7,
+      "name": "Android Tablet",
+      "brand": "Samsung",
+      "category": "Electronics",
+      "price": 22000,
+      "stock": 11,
+      "rating": 4.5,
+      "description": "10.5-inch Android tablet with Full HD display and fast processor.\nGreat for entertainment, reading, and online learning.",
+      "image": "https://m.media-amazon.com/images/I/71mO6FQ3hHL._AC_.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Bluetooth Speaker",
+      "brand": "JBL",
+      "category": "Audio",
+      "price": 3000,
+      "stock": 15,
+      "rating": 4.7,
+      "description": "Portable Bluetooth speaker with deep bass and clear audio.\nWater-resistant design with up to 12 hours of playback.",
+      "image": "https://th.bing.com/th/id/OIP.aiTNJm014Vqkz7-CcJCDVgHaHa?w=193&h=193&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+    }
+  ]
+}

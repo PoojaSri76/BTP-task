@@ -1,0 +1,68 @@
+{
+  "states": [
+    {
+      "code": "TN",
+      "name": "Tamil Nadu"
+    },
+    {
+      "code": "KA",
+      "name": "Karnataka"
+    },
+    {
+      "code": "KL",
+      "name": "Kerala"
+    }
+  ],
+  "cities": [
+    {
+      "code": "CHE",
+      "name": "Chennai",
+      "stateCode": "TN"
+    },
+    {
+      "code": "CBE",
+      "name": "Coimbatore",
+      "stateCode": "TN"
+    },
+    {
+      "code": "MDU",
+      "name": "Madurai",
+      "stateCode": "TN"
+    },
+    {
+      "code": "SLM",
+      "name": "Salem",
+      "stateCode": "TN"
+    },
+    {
+      "code": "BLR",
+      "name": "Bengaluru",
+      "stateCode": "KA"
+    },
+    {
+      "code": "MYS",
+      "name": "Mysuru",
+      "stateCode": "KA"
+    },
+    {
+      "code": "HBL",
+      "name": "Hubballi",
+      "stateCode": "KA"
+    },
+    {
+      "code": "KOC",
+      "name": "Kochi",
+      "stateCode": "KL"
+    },
+    {
+      "code": "TVM",
+      "name": "Thiruvananthapuram",
+      "stateCode": "KL"
+    },
+    {
+      "code": "CLT",
+      "name": "Kozhikode",
+      "stateCode": "KL"
+    }
+  ]
+}

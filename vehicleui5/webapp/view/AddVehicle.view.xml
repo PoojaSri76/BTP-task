@@ -1,0 +1,108 @@
+<mvc:View
+    controllerName="vehicleui5.controller.AddVehicle"
+    height="100%"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+        <NavContainer id="wizardContainer">
+            <pages>
+                <Page id="addVehicleWizard" showNavButton="true" navButtonPress=".onNavBack">
+                    <content>
+                        <Wizard complete="onHandleAdd" id="vehicleWizard">
+                        <WizardStep id="basicInfo" title="Basic Information">
+                            <form:SimpleForm >
+                                <Label text="Name"/>
+                                <Input placeholder="Enter Vehicle name" value="{vehicleTempJson>/name}"/>
+                                <Label text="Brand"/>
+                                <Input placeholder="Enter Vehicle brand" value="{vehicleTempJson>/brand}"/>
+                                <Label text="Model"/>
+                                <Input placeholder="Enter Vehicle model" value="{vehicleTempJson>/model}"/>
+                                <Label text="Year"/>
+                                <Input type="Number" placeholder="Enter year" value="{vehicleTempJson>/year}"/>
+                            </form:SimpleForm>
+                        </WizardStep>
+                        <WizardStep id="specifications" title="Vehicle Specifications">
+                            <form:SimpleForm >
+                                <Label text="Color"/>
+                                <Input placeholder="Enter Vehicle color" value="{vehicleTempJson>/color}"/>
+                                <Label text="Fuel Type"/>
+                                <Input placeholder="Enter Vehicle fuel type" value="{vehicleTempJson>/fuelType}"/>
+                                <Label text="Transmission"/>
+                                <Input placeholder="Enter Vehicle transmission" value="{vehicleTempJson>/transmission}"/>
+                                <Label text="Mileage"/>
+                                <Input type="Number" placeholder="Enter Vehicle mileage" value="{vehicleTempJson>/mileage}"/>
+                            </form:SimpleForm>
+                        </WizardStep>
+                        <WizardStep id="pricing" title="Pricing">
+                            <form:SimpleForm >
+                                <Label text="New Price"/>
+                                <Input placeholder="Enter Vehicle price" value="{vehicleTempJson>/newPrice}"/>
+                            </form:SimpleForm>
+                        </WizardStep>
+                        <WizardStep id="availability" title="Availability">
+                            <form:SimpleForm >
+                                <Label text="Availability"/>
+                                 <Select width="200px" selectedKey="{vehicleTempJson>/state}">
+                                    <core:Item key="Available" text="Available"/>
+                                    <core:Item key="Sold" text="Sold"/>
+                                    <core:Item key="ComingSoon" text="Coming Soon"/>
+                                    <core:Item key="OutOfStock" text="Out of Stock"/>
+                                    <core:Item key="Discontinued" text="Discontinued"/>
+                                </Select>
+                            </form:SimpleForm>
+                        </WizardStep>
+                        </Wizard>
+                    </content>
+                </Page>
+                <Page id="reviewPage" showNavButton="true" navButtonPress=".onWizardNavBack">
+                <content>
+                    <Panel headerText="Basic Information">
+                    <form:SimpleForm>
+                        <Label text="Name"/>
+                        <Text text="{vehicleTempJson>/name}"/>
+                        <Label text="Brand"/>
+                        <Text text="{vehicleTempJson>/brand}"/>
+                        <Label text="Model"/>
+                        <Text text="{vehicleTempJson>/model}"/>
+                        <Label text="Year"/>
+                        <Text text="{vehicleTempJson>/year}"/>
+                    </form:SimpleForm>
+                    </Panel>
+                    <Panel headerText="Vehicle Specifications">
+                    <form:SimpleForm>
+                        <Label text="Color"/>
+                        <Text text="{vehicleTempJson>/color}"/>
+                        <Label text="Fuel Type"/>
+                        <Text text="{vehicleTempJson>/fuelType}"/>
+                        <Label text="Transmission"/>
+                        <Text text="{vehicleTempJson>/transmission}"/>
+                        <Label text="Mileage"/>
+                        <Text text="{vehicleTempJson>/mileage}"/>
+                    </form:SimpleForm>
+                    </Panel>
+                    <Panel headerText="Pricing">
+                    <form:SimpleForm>
+                        <Label text="New Price"/>
+                        <Text text="{vehicleTempJson>/newPrice}"/>
+                    </form:SimpleForm>
+                    </Panel>
+                    <Panel headerText="Availability">
+                    <form:SimpleForm >
+                        <Label text="Availability"/>
+                        <Text text="{vehicleTempJson>/state}"/>
+                    </form:SimpleForm>
+                    </Panel>
+                </content>
+                <footer>
+                    <Bar>
+                    <contentRight>
+                        <Button text="Discard" type="Transparent" press="onDiscard"></Button>
+                        <Button text="Submit" type="Emphasized" press="onAddVehicle"></Button>
+                    </contentRight>
+                    </Bar>
+                </footer>
+                </Page>
+            </pages>
+        </NavContainer>
+</mvc:View>

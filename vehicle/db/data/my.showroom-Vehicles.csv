@@ -1,0 +1,5 @@
+vehicleId,name,brand,model,year,color,fuelType,transmission,mileage,oldPrice,newPrice,state
+11111111-1111-1111-1111-111111111111,Creta,Hyundai,Creta SX,2024,White,Petrol,Automatic,18.50,1800000,1650000,Available
+22222222-2222-2222-2222-222222222222,Fortuner,Toyota,Fortuner 4x4,2023,Black,Diesel,Automatic,14.20,4200000,3950000,Available
+33333333-3333-3333-3333-333333333333,Nexon,Tata,Nexon XZ,2024,Blue,Petrol,Manual,17.80,1450000,1350000,Sold
+44444444-4444-4444-4444-444444444444,City,Honda,City ZX,2023,Silver,Petrol,Automatic,18.40,1600000,1500000,Available

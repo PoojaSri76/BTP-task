@@ -1,0 +1,57 @@
+<mvc:View
+    controllerName="vehicleui5.controller.Dashboard"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:tnt="sap.tnt">
+
+    <Page showNavButton="true">
+        <tnt:ToolPage id="toolPage">
+
+            <tnt:sideContent>
+
+                <tnt:SideNavigation
+                    id="sideNavigation"
+                    expanded="false">
+
+                    <tnt:NavigationList
+                        itemSelect=".onItemSelect">
+
+                        <tnt:NavigationListItem
+                            text="Dashboard"
+                            icon="sap-icon://home"
+                            key="dashboard"/>
+
+                        <tnt:NavigationListItem
+                            text="Maintenance"
+                            icon="sap-icon://wrench"
+                            key="maintenance"/>
+
+                        <tnt:NavigationListItem
+                            text="Documents"
+                            icon="sap-icon://documents"
+                            key="documents"/>
+
+                        <tnt:NavigationListItem
+                            text="Reports"
+                            icon="sap-icon://bar-chart"
+                            key="reports"/>
+
+                    </tnt:NavigationList>
+
+                </tnt:SideNavigation>
+
+
+            </tnt:sideContent>
+
+
+            <tnt:mainContents>
+
+                <NavContainer
+                    id="mainContainer"/>
+
+            </tnt:mainContents>
+
+        </tnt:ToolPage>
+    </Page>
+
+</mvc:View>

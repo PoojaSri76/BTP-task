@@ -1,0 +1,61 @@
+<mvc:View 
+    controllerName="vehicleui5.controller.overview"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+    <f:DynamicPage id="page">
+    <f:title>
+        <f:DynamicPageTitle >
+            <f:heading>
+                <Title text="{i18n>title}"></Title>
+            </f:heading>
+            <f:expandedContent>
+            <Text text="View and manage your vehicle records"></Text>
+            </f:expandedContent>
+             <f:snappedContent>
+                <Text text="Vehicle Overview" />
+            </f:snappedContent>
+        </f:DynamicPageTitle>
+    </f:title>
+    <f:header>
+        <f:DynamicPageHeader>
+            <HBox justifyContent="SpaceBetween">
+            <HBox gap="20px">
+                <GenericTile width="100px" header="Total Vehicles" subheader="20" tileIcon="sap-icon://sys-enter-2" mode="IconMode">
+                <tileContent>
+                </tileContent>
+                </GenericTile>
+                <GenericTile width="100px" header="Available" tileIcon="sap-icon://unlocked" mode="IconMode">
+                <tileContent>
+                </tileContent>
+                </GenericTile>
+                </HBox>
+                <Toolbar >
+                <Button text="Add vehicle" press="onAddVehicle" type="Emphasized"/>
+                <Button text="Dashboard" press="onDashboard"/>
+                </Toolbar>
+
+            </HBox>
+            
+        </f:DynamicPageHeader>
+    </f:header>
+    <f:content>
+    <IconTabBar id="iconTabFilter" 
+                select="onFilterSelect"
+                enableTabReordering="true">
+        <items>
+            <IconTabFilter text="All" key="All"/>
+            <IconTabSeparator/>
+            <IconTabFilter text="Available" key="Available"/>
+            <IconTabFilter text="Sold" key="Sold" />
+            <IconTabFilter text="Coming Soon" key="ComingSoon" />
+            <IconTabFilter text="Out Of Stock" key="OutOfStock" />
+            <IconTabFilter text="Discontinued" key="Discontinued" />
+        </items>
+        <content>
+        <mvc:XMLView id="listView" viewName="vehicleui5.view.List"></mvc:XMLView>
+        </content>
+    </IconTabBar>
+    </f:content>
+    </f:DynamicPage>
+</mvc:View>

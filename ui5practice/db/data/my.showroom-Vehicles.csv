@@ -1,0 +1,11 @@
+vehicleId,name,state,oldPrice,newPrice
+V001,Tata Nexon,Tamil Nadu,850000,900000
+V002,Hyundai Creta,Karnataka,1100000,1180000
+V003,Maruti Swift,Kerala,650000,700000
+V004,Mahindra XUV700,Andhra Pradesh,1400000,1500000
+V005,Toyota Innova,Andhra Pradesh,1800000,1900000
+V006,Kia Seltos,Maharashtra,1200000,1280000
+V007,Honda City,Maharashtra,1150000,1200000
+V008,Tata Harrier,Gujarat,1500000,1580000
+V009,Volkswagen Virtus,Andhra Pradesh,1350000,1420000
+V010,Skoda Slavia,West Bengal,1250000,1320000

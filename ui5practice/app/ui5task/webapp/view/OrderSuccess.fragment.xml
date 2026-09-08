@@ -1,0 +1,8 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<BusyDialog
+		title="Placing Order"
+		text="Your order is being placed ..."
+		close=".onDialogClosed" />
+</core:FragmentDefinition>

@@ -1,0 +1,55 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <List
+        id="vehicleList"
+        items="{/Vehicle}"
+        growing="true"
+        growingScrollToLoad="true"
+        headerText="Vehicles">
+
+        <items>
+            <ObjectListItem
+                title="{name}"
+                intro="{brand} {model}"
+                number="{newPrice}"
+                numberUnit="INR">
+
+                <attributes>
+                    <ObjectAttribute
+                        title="Year"
+                        text="{year}" />
+
+                    <ObjectAttribute
+                        title="Color"
+                        text="{color}" />
+
+                    <ObjectAttribute
+                        title="Fuel Type"
+                        text="{fuelType}" />
+
+                    <ObjectAttribute
+                        title="Transmission"
+                        text="{transmission}" />
+
+                    <ObjectAttribute
+                        title="Mileage"
+                        text="{mileage}" />
+
+                    <ObjectAttribute
+                        title="Old Price"
+                        text="{oldPrice}" />
+                </attributes>
+
+                <firstStatus>
+                    <ObjectStatus
+                        text="{state}" />
+                </firstStatus>
+
+            </ObjectListItem>
+        </items>
+
+    </List>
+
+</mvc:View>

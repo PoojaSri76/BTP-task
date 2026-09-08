@@ -1,0 +1,13 @@
+<mvc:View controllerName="ui5task.controller.Overview"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <headerContent>
+            <Button text="Cart" press="onGoToCart" icon="sap-icon://cart"/>
+            <Button text="Sign up" press="onLogin" type="Emphasized"></Button>
+        </headerContent>
+        <content>
+            <mvc:XMLView viewName="ui5task.view.Product"></mvc:XMLView>
+        </content>
+    </Page>
+</mvc:View>

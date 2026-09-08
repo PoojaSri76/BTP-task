@@ -1,0 +1,23 @@
+{
+  "generationParameters": {
+    "generationDate": "Fri Aug 28 2026 07:25:27 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "CLI",
+    "serviceType": "OData URL",
+    "metadataFilename": "",
+    "serviceUrl": "https://1ce06d92trial-dev-vehicle-srv.cfapps.us10-003.hana.ondemand.com/odata/v4/vehicle",
+    "appName": "vehicleui5",
+    "appTitle": "vehicle management",
+    "appDescription": "An SAP Fiori application.",
+    "appNamespace": "",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.151.0",
+    "enableEslint": true,
+    "enableTypeScript": false,
+    "showMockDataInfo": true,
+    "generatorVersion": "1.31.1",
+    "template": "Basic V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [],
+    "launchText": "To launch the generated application, run the following from the generated application root folder:\n\n```\n    npm start\n```"
+  }
+}
